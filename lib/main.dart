@@ -17,9 +17,9 @@ class MyApp extends StatelessWidget {
         visualDensity: VisualDensity.adaptivePlatformDensity,
       ),
 
-      home: ChangeNotifierProvider<Counter>(
+      home: ChangeNotifierProvider<ValueNotifier<int>>(
         // ignore: deprecated_member_use
-        builder: (context) => Counter(),
+        builder: (context) => ValueNotifier<int>(0),
         child: MyHomePage(title: 'Flutter Demo Home Page'),
       ),
     );
@@ -35,7 +35,7 @@ class MyHomePage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
 
-    final counter = Provider.of<Counter>(context, listen: false);
+    final counter = Provider.of<ValueNotifier<int>>(context, listen: false);
 
     return Scaffold(
       appBar: AppBar(
@@ -48,7 +48,7 @@ class MyHomePage extends StatelessWidget {
             Text(
               'You have pushed the button this many times:',
             ),
-            Consumer<Counter>(
+            Consumer<ValueNotifier<int>>(
               // builder: (context,counter, child) =>
               builder: (_,counter, __) =>
               Text(
@@ -60,7 +60,7 @@ class MyHomePage extends StatelessWidget {
         ),
       ),
       floatingActionButton: FloatingActionButton(
-        onPressed: counter.increment,
+        onPressed: () => counter.value++,
         tooltip: 'Increment',
         child: Icon(Icons.add),
       ), // This trailing comma makes auto-formatting nicer for build methods.
